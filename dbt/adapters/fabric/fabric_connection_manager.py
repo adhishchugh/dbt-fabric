@@ -171,12 +171,34 @@ def get_environment_access_token(credentials: FabricCredentials) -> AccessToken:
     token = EnvironmentCredential().get_token(AZURE_CREDENTIAL_SCOPE)
     return token
 
+def get_aad_direct_token(credentials: FabricCredentials) -> AccessToken:
+    """
+    Get an Azure access token by using mspsarkutils
+    Parameters
+    -----------
+    credentials: FabricCredentials
+        Credentials.
+    Returns
+    -------
+    out : AccessToken
+        The access token.
+    """
+    assert credentials.token is not None
+    aad_token = credentials.token
+    expires_on = int(time.time() + 4500.0)
+    token = AccessToken(
+        token=aad_token,
+        expires_on=expires_on,
+    )
+    return token
+
 
 AZURE_AUTH_FUNCTIONS: Mapping[str, AZURE_AUTH_FUNCTION_TYPE] = {
     "cli": get_cli_access_token,
     "auto": get_auto_access_token,
     "environment": get_environment_access_token,
     "synapsespark": get_synapse_spark_access_token,
+    "ActiveDirectoryToken": get_aad_direct_token
 }
 
 
