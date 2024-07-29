@@ -198,7 +198,7 @@ AZURE_AUTH_FUNCTIONS: Mapping[str, AZURE_AUTH_FUNCTION_TYPE] = {
     "auto": get_auto_access_token,
     "environment": get_environment_access_token,
     "synapsespark": get_synapse_spark_access_token,
-    "ActiveDirectoryToken": get_aad_direct_token
+    "activedirectorytoken": get_aad_direct_token
 }
 
 

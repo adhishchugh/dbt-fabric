@@ -45,6 +45,19 @@ def mock_cli_access_token() -> str:
     )
     return successful_output
 
+@pytest.mark.parametrize("authentication", ["ActiveDirectoryToken"])
+def test_get_pyodbc_attrs_before_contains_access_token_key_for_direct_authentication(
+    credentials: FabricCredentials,
+    authentication: str
+) -> None:
+    """
+    When the ActiveDirectoryToken authentication is used, the attrs before should contain an
+    access token key.
+    """
+    credentials.authentication = authentication
+    credentials.token = "access token"
+    attrs_before = get_pyodbc_attrs_before(credentials)   
+    assert 1256 in attrs_before.keys()
 
 def test_get_pyodbc_attrs_before_empty_dict_when_service_principal(
     credentials: FabricCredentials,
